@@ -36,15 +36,15 @@ int main(int argc, char *argv[]) {
 	str file = argv[1];	//Имя файлоса
 	enum lock_type {	//Ну бля читать умеешь разберешься
 		DEFAULT,
-		WAITING
-		//SHARED
+		WAITING, 
+		SHARED
 	};
 	lock_type t = DEFAULT;
 	if (argc == 3) {
-		if (argv[2] == "-w") {
-			t = WAITING;
-		//} else if (argv[2] == "-s") {
-			//t = SHARED;
+		if (str(argv[2]) == "-w") {
+			t = WAITING;	
+		} else if (str(argv[2]) == "-s") {
+			t = SHARED;
 		} else {
 			t = DEFAULT;	//Нахуй я это написал спросишь меня ты // а я отвечу: Так удоли нахoй раз умный такой //Анивей эта строчка и выше лишние
 		}
@@ -75,7 +75,7 @@ int main(int argc, char *argv[]) {
 			case WAITING:
 				{
 #if !USE_FCNTL
-					if (flock(fileno(fd), LOCK_SH) == -1) {
+					if (flock(fileno(fd), LOCK_EX) == -1) {
 						throw std::runtime_error("Lock Faild");	//Типа мы достаточно окультурились чтоб бросать обшибки
 					}
 #endif
@@ -89,12 +89,27 @@ int main(int argc, char *argv[]) {
 					}
 #endif
 				}
-			//case SHARED:
-				//{}
+			case SHARED:
+				{
+#if !USE_FCNTL
+					if (flock(fileno(fd), LOCK_SH) == -1) {
+						throw std::runtime_error("Lock Faild");	//Типа мы достаточно окультурились чтоб бросать обшибки
+					}
+#endif
+					
+#if USE_FCNTL
+					if (fcntl(fileno(fd), F_SETLK, &fl) == -1) {
+						str err = "";
+						if (errno == EACCES || errno == EAGAIN)
+							err = ": already locked";
+						throw std::runtime_error("Lock Faild"+err);	//Типа мы достаточно окультурились чтоб бросать обшибки
+					}
+#endif
+				}
 			case DEFAULT:
 				{
 #if !USE_FCNTL
-					if (flock(fileno(fd), LOCK_EX | LOCK_NB) == -1) {
+					if (flock(fileno(fd), LOCK_EX) == -1) {
 						throw std::runtime_error("Lock Faild");	//Типа мы достаточно окультурились чтоб бросать обшибки
 					}
 #endif
