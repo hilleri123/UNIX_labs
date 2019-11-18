@@ -32,19 +32,18 @@ int main(int argc, char *argv[]) {
 	str args = "";	//Аргументы
 	char** args_c = static_cast<char**>(malloc(sizeof(char**)*(argc-2)));	//Аргументы дочки маминой подруги
 	//Если он спросит почему так мограй глазами и надейся что он не гей
-	for (int i = 2; i < argc-1; i++) {
+	for (int i = 1; i < argc-1; i++) {
 		args += " " + str(argv[i]);	//Разделяем все через пробел почему так потому что потом если сложить то будет красота
-		args_c[i-2] = argv[i];
+		args_c[i-1] = argv[i];
 	}
 
 	str file = argv[argc-1];	//Как обещали последний это файл
 
 
 
-	int fp = open(file.c_str(), O_CREAT|O_RDWR);	//Откроем файлочейчек
+	int fp = open(file.c_str(), O_CREAT|O_RDWR, 0666);	//Откроем файлочейчек
 	if (fp < 0) {
 		std::cout << "cannt open file :" << file << std::endl;
-		std::cout << "using stdout" << std::endl;
 	}
 
 
