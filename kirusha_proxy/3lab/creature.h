@@ -30,8 +30,8 @@ public:
 	Creature& operator=(const Creature&) = delete;
 	Creature& operator=(Creature&&) = delete;
 
-	bool lock() { _mutex.lock(); return true; }
-	bool unlock() { _mutex.unlock(); return false; }
+	bool lock() { return _mutex.try_lock(); }
+	bool unlock() { _mutex.unlock(); return true; }
 
 	c_type type() const { return _type; }
 
@@ -60,7 +60,6 @@ protected:
 	int _w_kill = 5;
 	int _w_breed = 50;
 	int _w_evolve = 2;
-
 
 	std::string _name;
 	std::mutex _mutex;

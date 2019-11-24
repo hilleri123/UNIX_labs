@@ -22,6 +22,7 @@ public:
 
 	Creature* get_creature(c_type type);
 
+
 	~Swamp();
 
 protected:
