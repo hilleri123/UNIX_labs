@@ -73,46 +73,6 @@ int main(int argc, char *argv[]) {
 	}
 	//std::cout << program_0 << " " << args_0 << " // " << program_1 << " " << args_1 << " t " << time << std::endl;
 
-/*
-	enum option {PROG, ARGS, TIME};
-	oprtion o = PROG;
-	for (int i = 1; i < argc; i++) {
-		str tmp(argv[i]);
-		if (tmp == "-p") {
-		} else if (tmp == "-a") {
-		} else if (tmp == "-t") {
-		} else if (tmp == "-w") {
-			pos = true;
-		} else {
-			switch (o) {
-			case PROG: {
-				if (program_0 == "") 
-					program_0 = tmp;
-				else
-					program_1 = tmp;
-				break;
-			}
-			case ARGS: {
-				if (arg0)
-					args_0.push_back(tmp);
-				else
-					program_1 = tmp;
-				break;
-			}
-			case TIME: {
-				time = std::stoi(tmp);
-				break;
-			}
-
-
-
-
-			}
-		}
-		args += " " + str(argv[i]);	//Разделяем все через пробел почему так потому что потом если сложить то будет красота
-		args_c[i-1] = argv[i];
-	}
-*/
 
 	args_0 = program_0 + " " + args_0;
 	args_1 = program_1 + " " + args_1;
@@ -173,6 +133,7 @@ int main(int argc, char *argv[]) {
 
 	wait(NULL);	//Ждем дочкек или дочку нам все равно сколько их там
 
+	sleep(1);
 
 	return 0;
 }
