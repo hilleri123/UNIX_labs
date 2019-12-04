@@ -196,8 +196,8 @@ bool Creature::kill() const
 				else
 					std::cout << _name << " tried to kill " << c->_name << " but it's immortal" << std::endl;
 				c->unlock();
-			}
-			std::cout << _name << " wanna kill someone but they're already dead :((((" << std::endl;
+			} else
+				std::cout << _name << " wanna kill someone but they're already dead :((((" << std::endl;
 		}
 	}
 	return false;

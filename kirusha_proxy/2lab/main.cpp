@@ -57,7 +57,7 @@ int main(int argc, char *argv[]) {
 	memset(&fl, 0, sizeof(fl));
 #endif
 
-	if (fd < 0) {
+	if (fd <= 0) {
 		throw std::runtime_error("cannt open file :"+file);	//Типа мы достаточно окультурились чтоб бросать обшибки
 	} else {
 #if USE_FCNTL
@@ -151,9 +151,10 @@ int main(int argc, char *argv[]) {
 					buf[seek] = 0;	//СИшная строка кончается 0 так шо ставим нулину	
 				}
 				//std::cout << "'" << buf.data() << "'" << std::endl;
-				std::cout << buf.data() << std::endl;
+				std::cout << buf.data();
 				seek -= buf.size()-1;
 			}
+			std::cout << std::endl;
 		} else if (command == "unlock") {	//Разлочим
 #if !USE_FCNTL
 			if (flock(fileno(fd), LOCK_UN) == -1)
