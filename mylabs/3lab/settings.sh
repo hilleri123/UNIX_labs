@@ -3,8 +3,8 @@
 
 cd files
 rpcgen del.x
-gcc server.c del_svc.c -o server
-gcc client.c del_clnt.c -o client
+g++ server.cpp del_svc.c del_xdr.c poly.cpp -o server
+g++ client.c del_clnt.c del_xdr.c -o client
 
 
 #cmake ./files/CMakeLists.txt
