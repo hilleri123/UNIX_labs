@@ -19,7 +19,7 @@ main(int argc, char* argv[])
 	}
 	//pol* msg = {argv[1], argv[2]};
 	pol msg = {argv[1], argv[2]};
-	//printf("\n");
+	//printf("%d\n", clnt);
 	char** str = del_1(&msg, clnt);
 	//printf("%s\n", *del_1(&argv[2], clnt));
 	//printf("\n");

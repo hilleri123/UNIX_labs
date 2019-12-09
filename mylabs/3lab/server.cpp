@@ -42,6 +42,7 @@ del_1(pol * p, CLIENT * clnt)
 	std::get<0>(d).print();
 	std::get<1>(d).print();
 	*/
+	auto d = a / b;
 
 	out = "chast '" + std::get<0>(d).string() + "' ost '" + std::get<1>(d).string() + "'";
 
@@ -56,7 +57,7 @@ char **
 //del_1_svc(char** t, struct svc_req *svc)
 del_1_svc(pol * t, struct svc_req *svc)
 {
-	//printf("%s\n", *t);
+	//printf("%s\n", t->first);
 	CLIENT * clnt;
 	return del_1(t, clnt);
 }
