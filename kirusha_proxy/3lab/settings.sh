@@ -2,6 +2,6 @@
 
 
 
-cmake CMakeLists.txt
+#cmake CMakeLists.txt
 make
 
