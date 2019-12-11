@@ -6,7 +6,7 @@ CXXFLAGS= -Wall
 
 
 
-SOURCE= create.o \
+OBJ= create.o \
 	delete.o \
 	pull.o \
 	push.o \
@@ -16,18 +16,16 @@ HEADER= function.h
 
 all: test myProject 
 
-SRCS= $(SOURCE:%.o=%.c)
+SRCS= $(OBJ:%.o=%.c)
 
 test: $(SRCS)
 	$(CC) $(CFLAGS) $(SRCS)
 
 
 
-OFILES= $(wildcard *.o)
 
-myProject: main.cpp test
-	echo $(OFILES)
-	$(CXX) $(CXXFLAGS) main.cpp $(OFILES) -o $@
+myProject: main.cpp $(test) $(OBJ)
+	$(CXX) $(CXXFLAGS) main.cpp $(OBJ) -o $@
 
 
 
