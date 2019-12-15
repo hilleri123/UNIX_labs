@@ -33,7 +33,17 @@ mqd_t
 open_q(const char* name)
 {
 	mqd_t qid;
-	qid = mq_open(name, O_RDONLY, 0666, crt_attr());
+	qid = mq_open(name, O_RDONLY | O_NONBLOCK, 0666, crt_attr());
+	int n = 0;
+	struct mq_attr attr;
+	mq_getattr(qid, &attr);
+	while (n >= 0) {
+		char* buf = (char*) malloc(attr.mq_msgsize*sizeof(char));
+		n = mq_receive(qid, buf, attr.mq_msgsize, NULL);
+	}
+
+	//mqd_t qid;
+	//qid = mq_open(name, O_RDONLY, 0666, crt_attr());
 	if (qid < 0) {
 		fprintf(stderr, "mq_open: %s\n", strerror(errno));
 	}
