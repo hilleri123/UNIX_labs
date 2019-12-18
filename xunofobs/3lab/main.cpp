@@ -54,7 +54,9 @@ int main(int argc, char *argv[]) {
 			}
 		//R = read
 		} else if (command == "r") {
-			msg = pull(msqid);
+			//Тип сообщения
+			std::cin >> key;
+			msg = pull(msqid, key);
 			//Если получили сообщение то печатаем его
 			if (msg) {
 				std::cout << msg << std::endl;
@@ -63,12 +65,14 @@ int main(int argc, char *argv[]) {
 			}
 		//W = write
 		} else if (command == "w") {
+			//Тип сообщения
+			std::cin >> key;
 			//Схавали остатки строки
 			std::getline(std::cin, tmp);
 			//Уберем лишний пробел
 			tmp = str(tmp.begin()+1, tmp.end());
 			//Токнем все туда
-			push(msqid, tmp.c_str());
+			push(msqid, key, tmp.c_str());
 		} else if (command == "s")
 			//Всякие разные там статусы
 			status(msqid);

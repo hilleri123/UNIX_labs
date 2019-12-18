@@ -1,36 +1,26 @@
 CC= gcc
-CFLAGS= -Wall -c
+CFLAGS= -Wall
 
 CXX= g++
 CXXFLAGS= -Wall
 
 
 
-OBJ= create.o \
-	delete.o \
-	pull.o \
-	push.o \
-	status.o
 
-HEADER= function.h
-
-all: test myProject 
-
-SRCS= $(OBJ:%.o=%.c)
-
-test: $(SRCS)
-	$(CC) $(CFLAGS) $(SRCS)
+all: myProject 
 
 
 
+functions.o: functions.c
+	$(CC) $(CFLAGS) -c functions.c -o $@
 
-myProject: main.cpp $(test) $(OBJ)
-	$(CXX) $(CXXFLAGS) main.cpp $(OBJ) -o $@
+main.o: main.cpp
+	$(CXX) $(CXXFLAGS) -c main.cpp -o $@
+
+
+myProject: main.o functions.o
+	$(CXX) $(CXXFLAGS) main.o functions.o -o $@
 
 
 
-
-clean: 
-	echo "'clean $(OFILES)'"
-	rm -f $(OFILES)
 
