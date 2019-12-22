@@ -11,10 +11,10 @@ all: myProject
 
 
 
-functions.o: functions.c
+functions.o: functions.c functions.h
 	$(CC) $(CFLAGS) -c functions.c -o $@
 
-main.o: main.cpp
+main.o: main.cpp functions.h
 	$(CXX) $(CXXFLAGS) -c main.cpp -o $@
 
 
