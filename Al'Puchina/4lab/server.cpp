@@ -55,8 +55,11 @@ del_1(pol * p, CLIENT * clnt)
 
 	if (fd <= 0) {
 		//throw std::runtime_error("cannt open file :"+file);	//Типа мы достаточно окультурились чтоб бросать обшибки
-		res = "-1";
-		return str_to_c(res);
+		fd = fopen(file, "w+");	//Откроем файлочейчек
+		if (fd <= 0) {
+			res = "-1";
+			return str_to_c(res);
+		}
 	}
 
 	//std::cout << command << file << seek << std::endl;
