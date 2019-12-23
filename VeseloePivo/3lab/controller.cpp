@@ -84,11 +84,11 @@ int main(int argc, char *argv[]) {
 			throw std::runtime_error("DB shm_open with "+name);
 		}
 		init = true;
+		if (ftruncate(bd_fd, bd_size)) {
+			throw std::runtime_error("DB ftruncate");
+		}
 	}
 
-	if (ftruncate(bd_fd, bd_size)) {
-		throw std::runtime_error("DB ftruncate");
-	}
 
 	bd_file *bd_ptr = static_cast<bd_file*>(mmap(NULL, bd_size, PROT_READ | PROT_WRITE, MAP_SHARED, bd_fd, 0));
 
