@@ -72,14 +72,17 @@ int main(int argc, char *argv[]) {
 				}
 			}
 
-			int fd = shm_open(name.c_str(), O_CREAT | O_RDWR, S_IRUSR | S_IWUSR);
+			int fd = shm_open(name.c_str(), O_RDWR, S_IRUSR | S_IWUSR);
 			if (fd < 0) {
-				throw std::runtime_error("shm_open with "+name);
+				fd = shm_open(name.c_str(), O_CREAT | O_RDWR, S_IRUSR | S_IWUSR);
+				if (fd < 0) {
+					throw std::runtime_error("shm_open with "+name);
+				}
+				if (ftruncate(fd, size)) {
+					throw std::runtime_error("ftruncate");
+				}
 			}
 		
-			if (ftruncate(fd, size)) {
-				throw std::runtime_error("ftruncate");
-			}
 		
 			ptr = static_cast<char*>(mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0));
 		
