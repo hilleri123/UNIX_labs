@@ -116,6 +116,17 @@ int main(int argc, char *argv[]) {
 				strcpy(tmp_ptr->name, str("/aaa"+std::to_string(seek)).c_str());
 				tmp_ptr->size = size;
 				to_new = false;
+				int tmp_fd = shm_open(tmp_ptr->name, O_CREAT | O_RDWR, S_IRUSR | S_IWUSR);
+				if (tmp_fd < 0) {
+					throw std::runtime_error("shm_open with "+name+" while new");
+				}
+				if (ftruncate(tmp_fd, tmp_ptr->size)) {
+					throw std::runtime_error("ftruncate while new");
+				}
+				//bd_file *ptr = static_cast<bd_file*>(mmap(NULL, tmp_ptr->size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0));
+				//if (ptr == MAP_FAILED) {
+					//throw std::runtime_error("mmap while load");
+				//}
 			}
 		}
 		if (to_del) {
