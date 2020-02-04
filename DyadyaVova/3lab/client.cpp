@@ -11,6 +11,8 @@
 #include <arpa/inet.h> 
 #include <iostream>
 
+//Запуск будет типа
+// ./Client 4x^4+1x^3+7x^1 5x^9
 
 
 int
